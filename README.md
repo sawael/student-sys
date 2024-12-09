@@ -95,9 +95,3 @@ Tkinter is used to build the user interface, with separate screens for login, ad
 
 - **Database**: Handles database connections and queries.
 - **App**: Manages the application GUI flow.
-
----
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
