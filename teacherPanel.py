@@ -1,7 +1,6 @@
-import sqlite3
 import tkinter as tk
 from tkinter import messagebox, ttk
-from database import Database
+
 
 class TeacherPanel:
     def __init__(self, parent, db):
@@ -46,16 +45,75 @@ class TeacherPanel:
         teacher_window.title("Teacher Actions")
         teacher_window.geometry("1280x720")
 
-        ttk.Label(teacher_window, text="Courses").pack(pady=10)
+        ttk.Label(teacher_window, text="Courses", font=("Arial", 16)).pack(pady=10)
 
-        tree = ttk.Treeview(teacher_window, columns=("ID", "Course Name"), show="headings")
-        tree.heading("ID", text="Course ID")
-        tree.heading("Course Name", text="Course Name")
+        self.course_tree = ttk.Treeview(teacher_window, columns=("ID", "Course Name"), show="headings")
+        self.course_tree.heading("ID", text="Course ID")
+        self.course_tree.heading("Course Name", text="Course Name")
+
+        self.course_tree.column("ID", anchor="center", width=200)
+        self.course_tree.column("Course Name", anchor="center", width=300)
 
         self.db.cursor.execute("SELECT id, name FROM courses WHERE teacher_id = ?", (self.teacher_id,))
         courses = self.db.cursor.fetchall()
 
         for course in courses:
-            tree.insert("", "end", values=(course[0], course[1]))
+            self.course_tree.insert("", "end", values=(course[0], course[1]))
 
-        tree.pack(pady=10)
+        self.course_tree.pack(pady=10, expand=True, fill="both")
+
+        ttk.Button(teacher_window, text="Show Students",
+                   command=self.show_students).pack(pady=10)
+
+    def show_students(self):
+        selected_item = self.course_tree.selection()
+        if not selected_item:
+            messagebox.showwarning("No Selection", "Please select a course first!")
+            return
+
+        try:
+            course_id, course_name = self.course_tree.item(selected_item[0], "values")
+            print(f"Selected Course ID: {course_id}, Course Name: {course_name}")
+        except IndexError:
+            messagebox.showerror("Error", "Unable to retrieve the selected course. Please try again.")
+            return
+
+        self.db.cursor.execute("SELECT * FROM grades WHERE course_id = ?", (course_id,))
+        grades = self.db.cursor.fetchall()
+        print(f"Enrollments for Course ID {course_id}: {grades}")
+
+        if not grades:
+            messagebox.showinfo("No Students", "No students are enrolled in this course.")
+            return
+
+        self.db.cursor.execute("""
+            SELECT s.id, s.name
+            FROM students s
+            INNER JOIN grades g ON s.id = g.student_id
+            WHERE g.course_id = ?
+        """, (course_id,))
+        students = self.db.cursor.fetchall()
+        print(f"Students for Course ID {course_id}: {students}")
+
+        if not students:
+            messagebox.showinfo("No Students", "No students are enrolled in this course.")
+            return
+
+        student_window = tk.Toplevel(self.frame)
+        student_window.title(f"Students in {course_name}")
+        student_window.geometry("800x600")
+
+        ttk.Label(student_window, text=f"Course: {course_name}", font=("Arial", 16)).pack(pady=10)
+
+        student_tree = ttk.Treeview(student_window, columns=("Student ID", "Student Name"), show="headings")
+        student_tree.heading("Student ID", text="Student ID")
+        student_tree.heading("Student Name", text="Student Name")
+
+        student_tree.column("Student ID", anchor="center", width=200)
+        student_tree.column("Student Name", anchor="center", width=300)
+
+        for student in students:
+            student_tree.insert("", "end", values=(student[0], student[1]))
+
+        student_tree.pack(pady=10, expand=True, fill="both")
+        ttk.Button(student_window, text="Close", command=student_window.destroy).pack(pady=10)
