@@ -1,38 +1,73 @@
+# Student Management System (SMS)
 
-# Student Management System
+A Python-based platform that facilitates student and teacher management, along with course registration capabilities. The system is designed to be accessible on multiple platforms, including desktops, tablets, and smartphones.
 
-## Description
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [User Classes](#user-classes)
+- [System Requirements](#system-requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Database Details](#database-details)
+- [File Structure](#file-structure)
+- [Technical Architecture](#technical-architecture)
+- [Contributing](#contributing)
+- [License](#license)
 
-This is a **Student Management System (SMS)** built using Python. It provides an interface to manage students, teachers, and administrators, enabling user authentication and database interactions. The system leverages SQLite as its database and Tkinter for the graphical user interface (GUI).
+## Overview
 
----
+The Student Management System (SMS) is designed to streamline student enrollment and provide a centralized platform for academic management. It serves as a comprehensive solution for educational institutions to improve operational efficiency.
+
+### Key Benefits
+- Centralized student record management
+- Efficient course registration system
+- Streamlined communication between stakeholders
+- Multi-platform accessibility
 
 ## Features
-- **User Authentication**: Admins, teachers, and students have separate login mechanisms.
-- **Database Setup**: Automatically initializes a local SQLite database with required tables (`admins`, `teachers`, `students`).
-- **CRUD Operations**: Add, view, edit, and delete student/teacher records.
-- **GUI**: Simple and interactive user interface built using Tkinter.
-- **Data Persistence**: Data is stored locally in an SQLite database (`sms.db`).
 
----
+### Course Enrollment
+- Search functionality for available courses
+- Streamlined enrollment process
+- Course schedule viewing
 
-## Getting Started
+### Role-Based Access
 
-### Prerequisites
+#### Student Access
+- View assigned courses
+- Access teacher information
+- Course details lookup
 
-Ensure you have the following installed:
-- **Python** (Latest Version)
-- **Required Python libraries**:
-  - `sqlite3` (built-in with Python)
-  - `tkinter` (built-in with Python)
+#### Teacher Access
+- View assigned courses
+- Student roster management
+- Course management tools
 
-Install additional dependencies via `pip`:
-```bash
-pip install sqlite-utils
-pip install tkinter
-```
+#### Admin Access
+- Complete user account management
+  - Create, update, and delete accounts
+  - Manage user roles
+- Course administration
+  - Schedule management
+  - Teacher assignments
+- System-wide oversight
 
----
+## System Requirements
+
+### Hardware Requirements
+
+#### Minimum Specifications
+- **Processor:** Dual-core 2.0 GHz or higher
+- **RAM:** 4 GB minimum
+- **Storage:** 2 GB free space
+- **Display:** 1280x720 resolution or higher
+
+### Software Requirements
+
+#### Backend
+- Python (version TBD)
+- SQLite database
 
 ## Installation
 
@@ -47,51 +82,91 @@ cd student_sys
 python student_management.py
 ```
 
----
-
 ## Usage
 
-1. **Login Screen**:
-   - Upon running the program, the login screen appears. Users can log in as an admin, teacher, or student.
-2. **Admin Panel**:
-   - Manage teachers and students.
-   - Add, edit, or delete user records.
-3. **Teacher Panel**:
-   - Access student information.
-   - Perform relevant CRUD operations on student data.
-4. **Student Panel**:
-   - View personal data and academic information.
+### Login Screen
+- Upon running the program, the login screen appears
+- Users can log in as an admin, teacher, or student
 
----
+### Admin Panel
+- Manage teachers and students
+- Add, edit, or delete user records
+
+### Teacher Panel
+- Access student information
+- Perform relevant CRUD operations on student data
+
+### Student Panel
+- View personal data and academic information
 
 ## Database Details
 
-- **Database Name**: sms.db
-- **Tables**:
-  - `admins`: Stores administrator credentials.
-  - `teachers`: Stores teacher information and credentials.
-  - `students`: Stores student information and credentials.
+### Default Credentials
 
----
+#### Admin Access
+| Username | Password |
+|----------|----------|
+| admin    | admin    |
+
+#### Teacher Access
+| Name             | Username      | Password    |
+|------------------|---------------|-------------|
+| Dr Ahmed Atef    | ahmedatef     | 123atef    |
+| Dr Ahmed Samir   | ahmedsamir    | 123samir   |
+| Dr Sayed Shawkat | sayedshawkat  | 123shawkat |
+
+#### Student Access
+| Name  | Username | Password |
+|-------|----------|----------|
+| Ahmed | ahmed    | ahmed    |
+| Alaa  | alaa     | alaa     |
+| Nader | nader    | nader    |
+
+### Course Information
+| Course Name         | Teacher ID |
+|--------------------|------------|
+| Math 1             | 1          |
+| Software Engineering| 2          |
+| Machine Learning   | 3          |
 
 ## File Structure
 
-- **student_management.py**: Main application file containing GUI and database logic.
-- **sms.db**: SQLite database file (auto-generated upon running the script).
+```
+smsFinal/
+├── adminPanel.py        # Admin functionalities for managing data
+├── teacherPanel.py      # Teacher functionalities for managing courses and grades
+├── studentPanel.py      # Student functionalities for viewing courses and grades
+├── database.py          # Handles database interactions
+├── stdmng.py           # Manages student data
+├── mainSMS.py          # Main script to run the application
+├── sms.db              # SQLite database file
+└── README.md           # Documentation
+```
 
----
+## Technical Architecture
 
-## Code Overview
+### Database Schema
+- The Database class initializes and manages the SQLite database
+- Creates tables for admins, teachers, and students if they don't exist
+- Handles all database interactions through structured queries
 
-### Database Initialization
+### File Descriptions
+- **sms.db**: SQLite database containing all system data
+- **mainSMS.py**: Main script to run the application
+- **adminPanel.py**: Admin functionalities for managing data
+- **teacherPanel.py**: Teacher functionalities for managing courses and grades
+- **studentPanel.py**: Student functionalities for viewing courses and grades
+- **database.py**: Handles database interactions
+- **stdmng.py**: Manages student data
 
-The `Database` class is responsible for initializing and managing the SQLite database. It creates tables for admins, teachers, and students if they do not exist.
+## Contributing
 
-### GUI
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-Tkinter is used to build the user interface, with separate screens for login, admin, teacher, and student functionalities.
+## License
 
-### Key Classes
-
-- **Database**: Handles database connections and queries.
-- **App**: Manages the application GUI flow.
+This project is open-source and available under the MIT License.
