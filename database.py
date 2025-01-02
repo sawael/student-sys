@@ -49,6 +49,8 @@ class Database:
             )
         """)
 
+
+
         self.cursor.execute("INSERT OR IGNORE INTO admins (username, password) VALUES ('admin', 'admin')")
         self.conn.commit()
 
