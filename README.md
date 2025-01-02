@@ -79,7 +79,7 @@ cd student_sys
 
 2. Run the application:
 ```bash
-python student_management.py
+python mainSMS.py
 ```
 
 ## Usage
