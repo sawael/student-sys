@@ -1,8 +1,6 @@
-import sqlite3
 import tkinter as tk
 from tkinter import messagebox, ttk
-from database import Database
-from teacherPanel import TeacherPanel
+
 
 class StudentPanel:
     def __init__(self, parent, db):
@@ -48,7 +46,7 @@ class StudentPanel:
         tree = ttk.Treeview(dashboard_window, columns=("ID", "Name", "Teacher"), show="headings")
         tree.heading("ID", text="Course ID")
         tree.heading("Name", text="Course Name")
-        tree.heading("Teacher", text="Teacher")
+        tree.heading("Teacher", text="Teacher Name")
 
         tree.column("ID", anchor="center")
         tree.column("Name", anchor="center")
