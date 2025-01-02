@@ -1,6 +1,5 @@
-import sqlite3
-import tkinter as tk
-from tkinter import messagebox, ttk
+
+from tkinter import ttk
 from database import Database
 from teacherPanel import TeacherPanel
 from studentPanel import StudentPanel
