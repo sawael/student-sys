@@ -1,7 +1,7 @@
 import sqlite3
 import tkinter as tk
 from tkinter import messagebox, ttk
-from database import Database
+
 
 class AdminPanel:
     def __init__(self, parent, db):
